@@ -1,0 +1,127 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Users List</title>
+</head>
+
+<body>
+
+<h1>Users</h1>
+
+<ul id="userList"></ul>
+
+<script>
+
+async function loadUsers() {
+    try {
+        const response = await fetch("http://127.0.0.1:8000/users");
+        console.log(response)
+        const data = await response.json();
+        console.log(data)
+        const list = document.getElementById("userList");
+
+        data.users.forEach(user => {
+            const li = document.createElement("li");
+            li.textContent = "ID: "+user.id+ " - Name: "+ user.name + " - Age: " + user.age+ "- Native: "+user.native;
+            list.appendChild(li);
+        });
+
+    } catch (error) {
+        console.error("Error fetching users:", error);
+    }
+}
+
+loadUsers();
+
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add User</title>
+</head>
+
+<body>
+
+<h2>Add User</h2>
+
+<form id="userForm">
+
+<label>Name:</label>
+<input type="text" id="name" required><br><br>
+
+<label>Age:</label>
+<input type="number" id="age" required><br><br>
+
+<label>Native:</label>
+<input type="text" id="native" required><br><br>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<h3>Users</h3>
+<ul id="userList"></ul>
+
+<script>
+
+document.getElementById("userForm").addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const userData = {
+        name: document.getElementById("name").value,
+        age: parseInt(document.getElementById("age").value),
+        native: document.getElementById("native").value
+    };
+    console.log(userData)
+    const response = await fetch("http://127.0.0.1:8000/create_users", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData)
+    });
+
+    const result = await response.json();
+
+    console.log(result);
+
+    loadUsers();
+
+});
+
+async function loadUsers(){
+
+    const response = await fetch("http://127.0.0.1:8000/users");
+
+    const data = await response.json();
+
+    const list = document.getElementById("userList");
+
+    list.innerHTML = "";
+
+    data.users.forEach(user => {
+
+        const li = document.createElement("li");
+
+        li.textContent =
+        "Name: " + user.name +
+        " | Age: " + user.age +
+        " | Native: " + user.native;
+
+        list.appendChild(li);
+
+    });
+
+}
+
+loadUsers();
+
+</script>
+
+</body>
+</html>

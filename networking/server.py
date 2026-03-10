@@ -1,11 +1,9 @@
 import socket
 
-
 server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
 host = "0.0.0.0"
 port = 5000
-
 
 server_socket.bind((host,port))
 
@@ -28,7 +26,6 @@ while True:
 
     reply = input("Server: ")
     conn.send(reply.encode())
-
 
 conn.close()
 server_socket.close()

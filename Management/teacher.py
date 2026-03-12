@@ -7,3 +7,7 @@ def is_valid_aadhar(aadhar_no):
         return "Invalid Aadhar number"
     
     return "Valid Aadhar number"
+
+
+def check():
+    print("just checking")
